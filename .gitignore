@@ -1,0 +1,6 @@
+/app/config/config.local.neon
+/composer.lock
+/vendor/
+/.idea/
+/docker/database/*
+/docker/logs/nginx/*

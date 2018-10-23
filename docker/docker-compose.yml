@@ -1,0 +1,35 @@
+version: '3.1'
+
+services:
+    nginx:
+        build: ./nginx
+        container_name: nginx-ts3.gcore.cz
+        volumes:
+            - ./logs/nginx:/var/log/nginx
+            - ./../:/var/www/website/
+        links:
+            - php72
+        depends_on:
+            - db
+        ports:
+            - 8080:80
+            - 3000:443
+    php72:
+        build: ./php-fpm
+        container_name: php7.2-ts3.gcore.cz
+        volumes:
+            - ./../:/var/www/website/
+        ports:
+            - 9003:9000
+        links:
+            - db
+        depends_on:
+            - db
+    db:
+        image: mysql:5.7
+        environment:
+            MYSQL_ROOT_PASSWORD: '1234'
+        volumes:
+            - ./database:/var/lib/mysql
+        ports:
+            - 3309:3306
